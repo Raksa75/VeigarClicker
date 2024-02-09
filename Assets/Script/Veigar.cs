@@ -1,7 +1,18 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Veigar : MonoBehaviour
 {
+    // Variable affiché sur le HUD
+    public TMP_Text moneyText;
+    public TMP_Text attackSpeedText;
+    public TMP_Text attackText;
+    public TMP_Text apText;
+    public TMP_Text regenManaText;
+    public TMP_Text manaText;
+
+
     // Variables pour les statistiques de Veigar
     public float mana = 0f;
     public float maxMana = 100f;
@@ -9,7 +20,6 @@ public class Veigar : MonoBehaviour
     public float attackDamage = 10f;
     public float abilityPower = 0f;
     public float manaRegenRate = 0f; // Mana regenerated per second
-    public EnemyController enemy; //trouver l'enemy
 
     // Variables pour la gestion des sorts
     public float manaCostOfSpell = 50f;
@@ -17,17 +27,20 @@ public class Veigar : MonoBehaviour
     private float spellCooldownTimer = 0f;
     public float spellDamage = 20f; // Définir la valeur des dégâts du sort
 
-
     // Variables pour l'argent
     public float money = 0f;
 
     // Temps avant la prochaine attaque automatique
     private float nextAttackTime = 0f;
 
+    // Référence à l'ennemi
+    private GameObject enemy;
+
     // Méthode appelée au démarrage du jeu
     private void Start()
     {
-
+        // Rechercher l'objet ennemi par son tag
+        enemy = GameObject.FindGameObjectWithTag("Enemy");
     }
 
     private void Update()
@@ -46,8 +59,20 @@ public class Veigar : MonoBehaviour
         {
             AutoAttack();
         }
+
+        UpdateHUD();
     }
 
+    private void UpdateHUD()
+    {
+        // Mettre à jour le texte de chaque objet texte avec les valeurs correspondantes
+        moneyText.text = "Money: " + money.ToString();
+        attackSpeedText.text = "Attack Speed: " + attackSpeed.ToString();
+        attackText.text = "Attack: " + attackDamage.ToString();
+        apText.text = "AP: " + abilityPower.ToString();
+        regenManaText.text = "Regen Mana: " + manaRegenRate.ToString();
+        manaText.text = "Mana: " + mana.ToString();
+    }
 
     // Méthode pour régénérer le mana
     private void RegenerateMana()
@@ -68,7 +93,11 @@ public class Veigar : MonoBehaviour
         // Vérifier si l'attaque automatique est possible en fonction du temps écoulé depuis la dernière attaque
         if (Time.time >= nextAttackTime)
         {
-            FindObjectOfType<EnemyController>().TakeDamage(attackDamage); // Faites subir des dégâts à l'ennemi
+            // Faites subir des dégâts à l'ennemi s'il est trouvé
+            if (enemy != null)
+            {
+                enemy.GetComponent<EnemyController>().TakeDamage(attackDamage);
+            }
             nextAttackTime = Time.time + 1f / attackSpeed; // Mettez à jour le temps de la prochaine attaque
         }
     }
@@ -79,8 +108,11 @@ public class Veigar : MonoBehaviour
     {
         if (mana >= manaCostOfSpell && spellCooldownTimer <= 0)
         {
-            // Lancer le sort (insérer ici la logique du sort)
-            FindObjectOfType<EnemyController>().TakeDamage(spellDamage); // Faites subir des dégâts à l'ennemi avec le sort
+            // Faites subir des dégâts à l'ennemi avec le sort s'il est trouvé
+            if (enemy != null)
+            {
+                enemy.GetComponent<EnemyController>().TakeDamage(spellDamage);
+            }
             mana -= manaCostOfSpell; // Retirer le coût du sort du mana
             spellCooldownTimer = spellCooldown; // Définir le cooldown
         }

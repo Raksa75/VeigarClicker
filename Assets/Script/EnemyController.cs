@@ -4,6 +4,7 @@ public class EnemyController : MonoBehaviour
 {
     // Points de vie de l'ennemi
     public float health = 100f;
+    public float money = 100f;
 
     // Méthode appelée lorsqu'un clic gauche est détecté sur l'ennemi
     private void OnMouseDown()
@@ -46,7 +47,7 @@ public class EnemyController : MonoBehaviour
         if (veigar != null)
         {
             // Relâchez de l'argent (vous pouvez ajuster la quantité d'argent relâchée selon vos besoins)
-            veigar.EarnMoney(veigar.money);
+            veigar.EarnMoney(money);
 
             // Détruisez l'objet ennemi
             Destroy(gameObject);
