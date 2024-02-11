@@ -15,15 +15,15 @@ Sorts (Qui coute X de mana, choisir UN SORT qui se lance automatiquement une foi
 
 
 Items : 
-Shop a droite (qui coute des essences bleu)
+Shop menu coulissant situé a droite (items coûtant des essences bleue )
 	Items :
-		(Attaque speed,regen mana,mana max, attaque, ap, passif exclusif, actif avec CD)
+		(Statistiques possible : Attaque speed,regen mana,mana max, attaque, ap, passif exclusif, actif avec CD)
 
 Ennemi :
-Differents ennemis
+Differents ennemis :
 HP
 Drop d'argent
-Slide en haut des différents type d'ennemi afin de les choisirs et les farms
+menu a icone en haut de l'écran comportant les différents type d'ennemi afin de les choisirs et les farms
 
 End game ? :
 Pouvoir gerer plusieurs veigar à la fois
