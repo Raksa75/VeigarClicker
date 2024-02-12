@@ -4,14 +4,13 @@ using TMPro;
 
 public class Veigar : MonoBehaviour
 {
-    // Variable affiché sur le HUD
+    // Variable affichée sur le HUD
     public TMP_Text moneyText;
     public TMP_Text attackSpeedText;
     public TMP_Text attackText;
     public TMP_Text apText;
     public TMP_Text regenManaText;
     public TMP_Text manaText;
-
 
     // Variables pour les statistiques de Veigar
     public float mana = 0f;
@@ -31,7 +30,7 @@ public class Veigar : MonoBehaviour
     public float money = 0f;
 
     // Temps avant la prochaine attaque automatique
-    private float nextAttackTime = 0f;
+    private float nextAttackTime = Mathf.Infinity; // Initialiser avec une valeur très grande
 
     // Référence à l'ennemi
     private GameObject enemy;
@@ -41,6 +40,9 @@ public class Veigar : MonoBehaviour
     {
         // Rechercher l'objet ennemi par son tag
         enemy = GameObject.FindGameObjectWithTag("Enemy");
+
+        // Initialiser nextAttackTime avec une valeur très grande pour éviter l'attaque automatique au début du jeu
+        nextAttackTime = Mathf.Infinity;
     }
 
     private void Update()
@@ -101,7 +103,6 @@ public class Veigar : MonoBehaviour
             nextAttackTime = Time.time + 1f / attackSpeed; // Mettez à jour le temps de la prochaine attaque
         }
     }
-
 
     // Méthode pour lancer un sort
     public void CastSpell()
